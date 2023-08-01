@@ -1,4 +1,3 @@
-
 export type AllReturn = Promise<Project[]>
 export type All = () => AllReturn
 

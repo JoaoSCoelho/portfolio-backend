@@ -1,7 +1,5 @@
-import { everyIsRight } from "../../shared/either";
-import { IdSupplier } from "./global/suppliers/id";
-
-
+import { everyIsRight } from '../../shared/either'
+import { IdSupplier } from './global/suppliers/id'
 
 export class Entity {
   public readonly id: ID
@@ -15,6 +13,7 @@ export class Entity {
     this.createdAt = createdAt ?? currentMoment
     this.updatedAt = updatedAt ?? currentMoment
 
-    if (!everyIsRight([this.id, this.createdAt, this.updatedAt])) throw new Error()
-  };
+    if (!everyIsRight([this.id, this.createdAt, this.updatedAt]))
+      throw new Error()
+  }
 }

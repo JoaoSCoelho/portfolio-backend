@@ -1,5 +1,5 @@
-import { Project } from "../../domain/entities/project";
-import { IProjectsRepository } from "../../external/repositories/ports/projects-repository";
+import { Project } from '../../domain/entities/project'
+import { IProjectsRepository } from '../../external/repositories/ports/projects-repository'
 
 type ExecuteReturn = Promise<Project[]>
 type Execute = () => ExecuteReturn
@@ -9,9 +9,7 @@ export interface IGetProjectsUC {
 }
 
 export class GetProjects implements IGetProjectsUC {
-  constructor(
-    private readonly projectsRepository: IProjectsRepository
-  ) {}
+  constructor(private readonly projectsRepository: IProjectsRepository) {}
 
   execute: Execute = async () => {
     const projects = await this.projectsRepository.all()

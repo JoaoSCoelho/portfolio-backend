@@ -1,10 +1,10 @@
-import { Entity } from "../../core/domain/Entity";
+import { Entity } from '../../core/domain/Entity'
 
 interface IProjectProps {
-  readonly name: ProjectName,
-  readonly description: ProjectDescription,
-  readonly repositoryURL?: WebUrl,
-  readonly link?: WebUrl,
+  readonly name: ProjectName
+  readonly description: ProjectDescription
+  readonly repositoryURL?: WebUrl
+  readonly link?: WebUrl
 }
 
 export class Project extends Entity implements IProjectProps {
@@ -19,7 +19,5 @@ export class Project extends Entity implements IProjectProps {
     Object.freeze(this)
   }
 
-  static create() {
-    
-  }
+  static create() {}
 }
