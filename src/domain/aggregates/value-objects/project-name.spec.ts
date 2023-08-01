@@ -1,0 +1,30 @@
+import { Left } from '../../../shared/either'
+import { ProjectName } from './project-name'
+
+test('Deve instanciar um novo project-name', () => {
+  const name = 'something else'
+
+  const projectName = ProjectName.create(name)
+
+  expect(projectName).toBe(name)
+})
+
+describe('Erros de incompatibilidade', () => {
+  test('Erro por tipo inválido', () => {
+    const name = 46416546
+
+    const projectName = ProjectName.create(name as any)
+
+    expect(projectName).toBeInstanceOf(Left)
+    expect((projectName as Left<string>).value).toBe('Tipo inválido')
+  })
+
+  test('Erro por excesso de caracteres', () => {
+    const name = 'a'.repeat(99999999)
+
+    const projectName = ProjectName.create(name)
+
+    expect(projectName).toBeInstanceOf(Left)
+    expect((projectName as Left<string>).value).toBe('Muito longo')
+  })
+})
