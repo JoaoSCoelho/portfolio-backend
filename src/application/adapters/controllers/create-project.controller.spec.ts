@@ -1,0 +1,95 @@
+import { randCompanyName, randParagraph } from '@ngneat/falso'
+import { Request, Response } from 'express'
+
+import { FakeAdminMiddleware } from '../../../../tests/middlewares/fake-admin.middleware'
+import { FakeCreateProjectUC } from '../../../../tests/usecases/fake-create-project.usecase'
+import { CreateProjectController } from './create-project.controller'
+import { IController } from './ports/controller.port'
+
+test('Deve chamar o usecase', async () => {
+  const sendFunc = jest.fn()
+
+  const projectData = { name: randCompanyName(), description: randParagraph() }
+
+  const mockReq = {
+    headers: { authorization: process.env.ADMIN_AUTHORIZATION },
+    body: projectData,
+  } as Request
+  const mockRes = {
+    status: jest.fn(() => ({ send: sendFunc })),
+    send: sendFunc,
+  } as unknown as Response
+
+  const middleware = new FakeAdminMiddleware(process.env.ADMIN_AUTHORIZATION!)
+  const usecase = new FakeCreateProjectUC()
+  const controller: IController = new CreateProjectController(
+    middleware,
+    usecase,
+  )
+
+  await controller.handle(mockReq, mockRes)
+
+  expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
+  expect(usecase.execute).toHaveBeenCalledWith(projectData)
+  expect(sendFunc).toHaveBeenCalledWith({ project: expect.any(Object) })
+  expect(mockRes.status).toHaveBeenCalledWith(201)
+})
+
+// Passar no middleware de admin antes de rodar o usecase
+test('Deve retornar uma mensagem de erro antes de rodar o usecase', async () => {
+  const sendFunc = jest.fn()
+
+  const projectData = { name: randCompanyName(), description: randParagraph() }
+
+  const mockReq = {
+    headers: { authorization: undefined },
+    body: projectData,
+  } as Request
+  const mockRes = {
+    status: jest.fn(() => ({ send: sendFunc })),
+    send: sendFunc,
+  } as unknown as Response
+
+  const middleware = new FakeAdminMiddleware(process.env.ADMIN_AUTHORIZATION!)
+  const usecase = new FakeCreateProjectUC()
+  const controller: IController = new CreateProjectController(
+    middleware,
+    usecase,
+  )
+
+  await controller.handle(mockReq, mockRes)
+
+  expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
+  expect(usecase.execute).not.toHaveBeenCalled()
+  expect(mockRes.status).toHaveBeenCalledWith(401)
+  expect(sendFunc).toHaveBeenCalledWith({ message: expect.any(String) })
+})
+
+test('Deve retornar uma mensagem de erro por body errado', async () => {
+  const sendFunc = jest.fn()
+
+  const projectData = {}
+
+  const mockReq = {
+    headers: { authorization: process.env.ADMIN_AUTHORIZATION },
+    body: projectData,
+  } as Request
+  const mockRes = {
+    status: jest.fn(() => ({ send: sendFunc })),
+    send: sendFunc,
+  } as unknown as Response
+
+  const middleware = new FakeAdminMiddleware(process.env.ADMIN_AUTHORIZATION!)
+  const usecase = new FakeCreateProjectUC()
+  const controller: IController = new CreateProjectController(
+    middleware,
+    usecase,
+  )
+
+  await controller.handle(mockReq, mockRes)
+
+  expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
+  expect(usecase.execute).toHaveBeenCalledWith(projectData)
+  expect(mockRes.status).toHaveBeenCalledWith(400)
+  expect(sendFunc).toHaveBeenCalledWith({ message: expect.any(String) })
+})
