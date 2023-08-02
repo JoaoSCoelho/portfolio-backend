@@ -1,17 +1,14 @@
 import { Project } from '../../src/domain/entities/project'
-import {
-  All,
-  IProjectsRepository,
-} from '../../src/external/repositories/ports/projects-repository.port'
+import { IProjectsRepository } from '../../src/external/repositories/ports/projects-repository.port'
 
 export class InMemoryProjectsRepository implements IProjectsRepository {
-  private db: Project[]
+  db: Project[]
 
   constructor() {
     this.db = []
   }
 
-  all: All = async () => {
+  all = async () => {
     return this.db
   }
 }
