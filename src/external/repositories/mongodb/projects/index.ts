@@ -27,4 +27,8 @@ export class MongoProjectsRepository implements IProjectsRepository {
 
     return projects
   }
+
+  create: IProjectsRepository['create'] = async (project) => {
+    await this.model.create(project)
+  }
 }
