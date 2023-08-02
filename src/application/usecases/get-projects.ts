@@ -1,17 +1,9 @@
-import { Project } from '../../domain/entities/project'
-import { IProjectsRepository } from '../../external/repositories/ports/projects-repository'
-
-type ExecuteReturn = Promise<Project[]>
-type Execute = () => ExecuteReturn
-
-export interface IGetProjectsUC {
-  execute: Execute
-}
-
-export class GetProjects implements IGetProjectsUC {
+import { IProjectsRepository } from '../../external/repositories/ports/projects-repository.port'
+import { IGetProjectsUC } from './ports/get-projects.port'
+export class GetProjectsUC implements IGetProjectsUC {
   constructor(private readonly projectsRepository: IProjectsRepository) {}
 
-  execute: Execute = async () => {
+  async execute(): ReturnType<IGetProjectsUC['execute']> {
     const projects = await this.projectsRepository.all()
 
     return projects
