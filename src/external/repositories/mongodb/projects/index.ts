@@ -18,8 +18,8 @@ export class MongoProjectsRepository implements IProjectsRepository {
           repositoryUrl,
           link,
           id,
-          createdAt,
-          updatedAt,
+          new Date(createdAt),
+          new Date(updatedAt),
         ),
     )
 
