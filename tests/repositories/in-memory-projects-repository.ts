@@ -11,4 +11,8 @@ export class InMemoryProjectsRepository implements IProjectsRepository {
   all = async () => {
     return this.db
   }
+
+  create: IProjectsRepository['create'] = async (project) => {
+    this.db.push(project)
+  }
 }
