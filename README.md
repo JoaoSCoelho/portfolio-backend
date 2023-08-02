@@ -33,7 +33,7 @@ $ npm install
 
 ## Como rodar
 
-1. Crie um arquivo chamado `.env` na raíz do projeto conforme o padrão em [`.env.example`](.env.example) e defina suas variáveis de ambiente. (variáveis com a palavra `TEST` só são necessárias se for rodar o comando de testes)
+1. Crie um arquivo chamado `.env` na raíz do projeto conforme o padrão em [`.env.example`](.env.example) e defina suas variáveis de ambiente. (variáveis que começem com a palavra `TEST` só são necessárias se for rodar o comando de testes)
    * ❕ **PARA QUEM ESTÁ USANDO O MONGODB ATLAS**: Nas variáveis que for necessário o `MONGO_URI`, lembre-se de substituir `<password>` pela senha do database.
 
 2. Na pasta raíz do projeto, execute:
