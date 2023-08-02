@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
+    "test:e2e": "jest --projects ./tests/e2e",
     "dev": "nodemon",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "start": "node dist"
