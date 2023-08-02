@@ -1,4 +1,4 @@
-import { IGetProjectsUC } from '../../src/application/usecases/ports/get-projects.port'
+import { IGetProjectsUC } from '../../src/application/usecases/ports/get-projects.usecase.port'
 import { Project } from '../../src/domain/entities/project'
 import { Either } from '../../src/shared/either'
 

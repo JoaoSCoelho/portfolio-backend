@@ -3,7 +3,7 @@ import { randCompanyName, randParagraph, randUrl } from '@ngneat/falso'
 import { InMemoryProjectsRepository } from '../../../tests/repositories/in-memory-projects-repository'
 import { Project } from '../../domain/entities/project'
 import { Left } from '../../shared/either'
-import { CreateProjectUC } from './create-project'
+import { CreateProjectUC } from './create-project.usecase'
 
 test('Deve criar um novo Project apenas com os dados essenciais', async () => {
   const projectData = { name: randCompanyName(), description: randParagraph() }

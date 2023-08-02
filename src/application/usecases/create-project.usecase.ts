@@ -1,7 +1,7 @@
 import { Project } from '../../domain/entities/project'
 import { IProjectsRepository } from '../../external/repositories/ports/projects-repository.port'
 import { isLeft, left } from '../../shared/either'
-import { ICreateProjectUC } from './ports/create-project.port'
+import { ICreateProjectUC } from './ports/create-project.usecase.port'
 
 export class CreateProjectUC implements ICreateProjectUC {
   constructor(private readonly projectsRepository: IProjectsRepository) {}

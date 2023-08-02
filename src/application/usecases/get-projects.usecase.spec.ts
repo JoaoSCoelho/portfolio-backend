@@ -1,6 +1,6 @@
 import { InMemoryProjectsRepository } from '../../../tests/repositories/in-memory-projects-repository'
 import { Project } from '../../domain/entities/project'
-import { GetProjectsUC } from './get-projects'
+import { GetProjectsUC } from './get-projects.usecase'
 
 test('Deve retornar todos os projetos', async () => {
   const inMemoryProjectsRepository = new InMemoryProjectsRepository()
