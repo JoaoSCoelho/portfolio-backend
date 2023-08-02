@@ -82,11 +82,12 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
 Muitos conceitos de **Clean Architecture** e **S.O.L.I.D** foram aplicados nessa aplicação
 
 <div style="display: inline-block">
-  <img src="resources/node.png" style="width: 50px; height: 50px; vertical-align: middle;" title="Node" alt="Node logo">
-  <img src="resources/typescript-logo.svg.png" style="width: 50px; vertical-align: middle;" title="TypeScript" alt="TypeScript logo">
-  <img src="resources/express.png" style="width: 50px; background-color: white; border-radius: 9999px; vertical-align: middle;" title="Express" alt="Express logo">
-  <img src="resources/mongodb.png" style="width: 50px; height: 50px; vertical-align: middle;" title="MongoDB" alt="MongoDB logo">
-  <img src="resources/jest.png" style="width: 50px; height: 50px; vertical-align: middle;" title="Jest" alt="Jest logo">
+
+![Node logo](resources/node.png)
+![TypeScript logo](resources/typescript-logo.svg.png)
+![Express logo](resources/express.png)
+![MongoDB logo](resources/mongodb.png)
+![Jest logo](resources/jest.png)
 </div>
 
 Node.JS | TypeScript | Express | MongoDB | Jest |
