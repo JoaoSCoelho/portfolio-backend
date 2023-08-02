@@ -1,4 +1,4 @@
-import { IGetProjectsUC } from '../../usecases/ports/get-projects.port'
+import { IGetProjectsUC } from '../../usecases/ports/get-projects.usecase.port'
 import { IController } from './ports/controller.port'
 
 export class GetProjectsController implements IController {
