@@ -48,8 +48,11 @@ $ npm run build
 # Para executar a build do projeto
 $ npm run start
 
-# Para executar os testes automatizados
+# Para executar os testes unitários
 $ npm run test
+
+# Para executar os testes funcionais
+$ npm run test:e2e
 ```
 
 Agora você já pode acessar: `http://localhost:{ENV.PORT}`
@@ -64,6 +67,11 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
 ### Features
 
 - [x] Testes unitários
+- [x] Testes funcionais
+- [ ] Rotas
+  - [ ] Help
+  - [x] Create project
+  - [x] Get projects
 
 ## Licença
 
