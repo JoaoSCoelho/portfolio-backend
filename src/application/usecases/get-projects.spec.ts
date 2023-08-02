@@ -1,4 +1,4 @@
-import { InMemoryProjectsRepository } from '../../../tests/repositories/projects-repository'
+import { InMemoryProjectsRepository } from '../../../tests/repositories/in-memory-projects-repository'
 import { Project } from '../../domain/entities/project'
 import { GetProjects } from './get-projects'
 
