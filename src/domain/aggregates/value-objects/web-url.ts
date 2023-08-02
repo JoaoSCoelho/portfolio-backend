@@ -6,9 +6,9 @@ export class WebUrl extends String {
   static structure = () => /^((http)|(https)):\/\/.+\..+(\/.+)?$/gi
 
   static create(webUrl: string): Either<string, WebUrl> {
-    if (typeof webUrl !== this.type) return left('Tipo inválido')
-    if (webUrl.length > this.maximumLength) return left('Muito longo')
-    if (!this.structure().test(webUrl)) return left('Estrutura inválida')
+    if (typeof webUrl !== this.type) return left('O tipo disso aí não tem nada a ver')
+    if (webUrl.length > this.maximumLength) return left('Ta exagerado bro, caractere demais')
+    if (!this.structure().test(webUrl)) return left('Isso não é uma url nem aqui nem na *****')
 
     return String(webUrl)
   }

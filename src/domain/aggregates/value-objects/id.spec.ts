@@ -17,5 +17,5 @@ test('Deve retornar uma mensagem de incompatibilidade', () => {
   const id = ID.create(idStr as any)
 
   expect(id).toBeInstanceOf(Left)
-  expect((id as Left<string>).value).toBe('Tipo inválido')
+  expect((id as Left<string>).value).toBe('O tipo disso aí não tem nada a ver')
 })

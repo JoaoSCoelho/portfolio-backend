@@ -10,13 +10,15 @@ test('Deve instanciar um novo project-description', () => {
 })
 
 describe('Erros de incompatibilidade', () => {
-  test('Erro por tipo inválido', () => {
+  test('Erro por O tipo disso aí não tem nada a ver', () => {
     const description = 46416546
 
     const projectDescription = ProjectDescription.create(description as any)
 
     expect(projectDescription).toBeInstanceOf(Left)
-    expect((projectDescription as Left<string>).value).toBe('Tipo inválido')
+    expect((projectDescription as Left<string>).value).toBe(
+      'O tipo disso aí não tem nada a ver',
+    )
   })
 
   test('Erro por excesso de caracteres', () => {
@@ -25,6 +27,8 @@ describe('Erros de incompatibilidade', () => {
     const projectDescription = ProjectDescription.create(description)
 
     expect(projectDescription).toBeInstanceOf(Left)
-    expect((projectDescription as Left<string>).value).toBe('Muito longo')
+    expect((projectDescription as Left<string>).value).toBe(
+      'Ta exagerado bro, caractere demais',
+    )
   })
 })

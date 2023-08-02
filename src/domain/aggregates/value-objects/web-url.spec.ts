@@ -12,13 +12,15 @@ test('Deve instanciar um novo WebUrl', () => {
 })
 
 describe('Deve retornar erros de incommpatibilidade', () => {
-  test('Erro por tipo inválido', () => {
+  test('Erro por O tipo disso aí não tem nada a ver', () => {
     const url = 654365324
 
     const webUrl = WebUrl.create(url as any)
 
     expect(webUrl).toBeInstanceOf(Left)
-    expect((webUrl as Left<string>).value).toBe('Tipo inválido')
+    expect((webUrl as Left<string>).value).toBe(
+      'O tipo disso aí não tem nada a ver',
+    )
   })
 
   test('Erro por excesso de caracteres', () => {
@@ -27,7 +29,9 @@ describe('Deve retornar erros de incommpatibilidade', () => {
     const webUrl = WebUrl.create(url)
 
     expect(webUrl).toBeInstanceOf(Left)
-    expect((webUrl as Left<string>).value).toBe('Muito longo')
+    expect((webUrl as Left<string>).value).toBe(
+      'Ta exagerado bro, caractere demais',
+    )
   })
 
   test('Erro por estrutura inválida', () => {
@@ -36,6 +40,8 @@ describe('Deve retornar erros de incommpatibilidade', () => {
     const webUrl = WebUrl.create(url)
 
     expect(webUrl).toBeInstanceOf(Left)
-    expect((webUrl as Left<string>).value).toBe('Estrutura inválida')
+    expect((webUrl as Left<string>).value).toBe(
+      'Isso não é uma url nem aqui nem na *****',
+    )
   })
 })

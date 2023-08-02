@@ -7,9 +7,10 @@ export class ProjectDescription extends String {
   static create(
     projectDescription: string,
   ): Either<string, ProjectDescription> {
-    if (typeof projectDescription !== this.type) return left('Tipo inválido')
+    if (typeof projectDescription !== this.type)
+      return left('O tipo disso aí não tem nada a ver')
     if (projectDescription.length > this.maximumLength)
-      return left('Muito longo')
+      return left('Ta exagerado bro, caractere demais')
 
     return String(projectDescription)
   }

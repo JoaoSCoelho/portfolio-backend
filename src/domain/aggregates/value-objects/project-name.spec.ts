@@ -10,13 +10,15 @@ test('Deve instanciar um novo project-name', () => {
 })
 
 describe('Erros de incompatibilidade', () => {
-  test('Erro por tipo inválido', () => {
+  test('Erro por O tipo disso aí não tem nada a ver', () => {
     const name = 46416546
 
     const projectName = ProjectName.create(name as any)
 
     expect(projectName).toBeInstanceOf(Left)
-    expect((projectName as Left<string>).value).toBe('Tipo inválido')
+    expect((projectName as Left<string>).value).toBe(
+      'O tipo disso aí não tem nada a ver',
+    )
   })
 
   test('Erro por excesso de caracteres', () => {
@@ -25,6 +27,8 @@ describe('Erros de incompatibilidade', () => {
     const projectName = ProjectName.create(name)
 
     expect(projectName).toBeInstanceOf(Left)
-    expect((projectName as Left<string>).value).toBe('Muito longo')
+    expect((projectName as Left<string>).value).toBe(
+      'Ta exagerado bro, caractere demais',
+    )
   })
 })

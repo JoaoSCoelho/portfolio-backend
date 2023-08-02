@@ -10,13 +10,15 @@ test('Deve instanciar um Moment', () => {
 })
 
 describe('Deve retornar uma mensagem de incompatibilidade', () => {
-  test('Incompatibilidade por tipo inválido', () => {
+  test('Incompatibilidade por O tipo disso aí não tem nada a ver', () => {
     const date = false
 
     const moment = Moment.create(date as any)
 
     expect(moment).toBeInstanceOf(Left)
-    expect((moment as Left<string>).value).toBe('Tipo inválido')
+    expect((moment as Left<string>).value).toBe(
+      'O tipo disso aí não tem nada a ver',
+    )
   })
 
   test('Incompatibilidade por não ser instacia de Date', () => {
@@ -25,7 +27,9 @@ describe('Deve retornar uma mensagem de incompatibilidade', () => {
     const moment = Moment.create(date as any)
 
     expect(moment).toBeInstanceOf(Left)
-    expect((moment as Left<string>).value).toBe('Não é uma data')
+    expect((moment as Left<string>).value).toBe(
+      'Se não instancia Date não é data parceiro',
+    )
   })
 
   test('Incompatibilidade por ser uma data inválida', () => {
@@ -34,6 +38,6 @@ describe('Deve retornar uma mensagem de incompatibilidade', () => {
     const moment = Moment.create(date)
 
     expect(moment).toBeInstanceOf(Left)
-    expect((moment as Left<string>).value).toBe('Data inválida')
+    expect((moment as Left<string>).value).toBe('Isso só data em outro mundo')
   })
 })
