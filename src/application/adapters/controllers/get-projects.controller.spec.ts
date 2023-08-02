@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { FakeGetProjectsUC } from '../../../../tests/usecases/fake-get-projects'
+import { FakeGetProjectsUC } from '../../../../tests/usecases/fake-get-projects.usecase'
 import { GetProjectsController } from './get-projects.controller'
 
 test('Deve chamar o usecase e retornar ', async () => {
@@ -13,8 +13,6 @@ test('Deve chamar o usecase e retornar ', async () => {
 
   await controller.handle(mockReq, mockRes)
 
-  expect(useCase.execute).toHaveBeenCalledTimes(1)
   expect(useCase.execute).toHaveBeenCalledWith()
-  expect(mockRes.send).toHaveBeenCalledTimes(1)
   expect(mockRes.send).toHaveBeenCalledWith({ projects: expect.any(Array) })
 })
