@@ -16,7 +16,7 @@ export class CreateProjectUC implements ICreateProjectUC {
     const project = Project.create(name, description, repositoryUrl, link)
 
     if (isLeft(project))
-      return left('Deu merda aqui instanciando o project: →→ ' + project.value)
+      return left('Deu merda aqui instanciando o project: >> ' + project.value)
 
     // Salva no banco
     await this.projectsRepository.create(project)

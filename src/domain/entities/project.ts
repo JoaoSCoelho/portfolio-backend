@@ -28,18 +28,18 @@ export class Project extends Entity {
     // Verifica para uma nova entidade ----------------------------------------
 
     const name = ProjectName.create(_name)
-    if (isLeft(name)) return left('name: →→ ' + name.value)
+    if (isLeft(name)) return left('name: >> ' + name.value)
 
     const description = ProjectDescription.create(_description)
-    if (isLeft(description)) return left('description: →→ ' + description.value)
+    if (isLeft(description)) return left('description: >> ' + description.value)
 
     const repositoryUrl =
       _repositoryUrl !== undefined ? WebUrl.create(_repositoryUrl) : undefined
     if (isLeft(repositoryUrl))
-      return left('repositoryUrl: →→ ' + repositoryUrl.value)
+      return left('repositoryUrl: >> ' + repositoryUrl.value)
 
     const link = _link !== undefined ? WebUrl.create(_link) : undefined
-    if (isLeft(link)) return left('link: →→ ' + link.value)
+    if (isLeft(link)) return left('link: >> ' + link.value)
 
     if (!params.length)
       return new Project(name, description, repositoryUrl, link)
@@ -49,13 +49,13 @@ export class Project extends Entity {
     const [_id, _createdAt, _updatedAt] = params
 
     const id = ID.create(_id)
-    if (isLeft(id)) return left('id: →→ ' + id.value)
+    if (isLeft(id)) return left('id: >> ' + id.value)
 
     const createdAt = Moment.create(_createdAt)
-    if (isLeft(createdAt)) return left('createdAt: →→ ' + createdAt.value)
+    if (isLeft(createdAt)) return left('createdAt: >> ' + createdAt.value)
 
     const updatedAt = Moment.create(_updatedAt)
-    if (isLeft(updatedAt)) return left('updatedAt: →→ ' + updatedAt.value)
+    if (isLeft(updatedAt)) return left('updatedAt: >> ' + updatedAt.value)
 
     return new Project(
       name,
