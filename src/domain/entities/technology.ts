@@ -8,30 +8,14 @@ import { TechnologyName } from '../aggregates/value-objects/technology-name'
 import { WebUrl } from '../aggregates/value-objects/web-url'
 
 export class Technology extends Entity {
-  public readonly keywords: List<Keyword>
-  public readonly aliases: List<TechnologyName>
-
   private constructor(
     public readonly name: TechnologyName,
-    keywords?: List<Keyword>,
-    aliases?: List<TechnologyName>,
+    public readonly keywords: List<Keyword>,
+    public readonly aliases: List<TechnologyName>,
     public readonly logoUrl?: WebUrl,
     ...params: EntityParams
   ) {
     super(...params)
-
-    if (params.length) {
-      // Quer dizer que é uma entidade já existente
-
-      if (!keywords || !aliases) throw new Error()
-
-      this.keywords = keywords
-      this.aliases = aliases
-    } else {
-      this.keywords = keywords ?? []
-      this.aliases = aliases ?? []
-    }
-
     Object.freeze(this)
   }
 
@@ -47,12 +31,12 @@ export class Technology extends Entity {
     const name = TechnologyName.create(_name)
     if (isLeft(name)) return left('name: >> ' + name.value)
 
-    const keywords =
-      _keywords !== undefined ? List.create(_keywords, Keyword) : undefined
+    let keywords =
+      _keywords !== undefined ? List.create(_keywords, Keyword) : []
     if (isLeft(keywords)) return left('keywords: >> ' + keywords.value)
 
-    const aliases =
-      _aliases !== undefined ? List.create(_aliases, TechnologyName) : undefined
+    let aliases =
+      _aliases !== undefined ? List.create(_aliases, TechnologyName) : []
     if (isLeft(aliases)) return left(`aliases: >> ${aliases.value}`)
 
     const logoUrl = _logoUrl !== undefined ? WebUrl.create(_logoUrl) : undefined
@@ -72,6 +56,12 @@ export class Technology extends Entity {
 
     const updatedAt = Moment.create(_updatedAt)
     if (isLeft(updatedAt)) return left('updatedAt: >> ' + updatedAt.value)
+
+    keywords = List.create(_keywords as string[], Keyword)
+    if (isLeft(keywords)) return left('keywords: >> ' + keywords.value)
+
+    aliases = List.create(_aliases as string[], TechnologyName)
+    if (isLeft(aliases)) return left('aliases: >> ' + aliases.value)
 
     return new Technology(
       name,

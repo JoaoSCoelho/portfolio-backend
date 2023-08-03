@@ -13,7 +13,9 @@ export class Entity {
   public readonly updatedAt: Moment
 
   protected constructor(...[id, createdAt, updatedAt]: EntityParams) {
-    if (id && createdAt && updatedAt) {
+    if (id || createdAt || updatedAt) {
+      if (!(id && createdAt && updatedAt)) throw new Error()
+
       this.id = id
       this.createdAt = createdAt
       this.updatedAt = updatedAt

@@ -28,7 +28,7 @@ describe('Instanciando uma nova Technology', () => {
       const technologyData = {
         name: randCompanyName(),
         keywords: [randWord(), randWord(), randWord()],
-        aliases: [randWord(), randWord()],
+        aliases: [randCompanyName(), randCompanyName()],
         logoUrl: randUrl(),
       }
 
@@ -83,7 +83,7 @@ describe('Instanciando uma nova Technology', () => {
     test('Deve retornar um erro do aliases', () => {
       const data = {
         name: randCompanyName(),
-        aliases: randWord(),
+        aliases: randCompanyName(),
       }
 
       const entity = Technology.create(
@@ -129,7 +129,12 @@ describe('Instanciando uma tecnologia existente', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         name: randCompanyName(),
-        aliases: [randWord(), randWord(), randWord(), randWord()],
+        aliases: [
+          randCompanyName(),
+          randCompanyName(),
+          randCompanyName(),
+          randCompanyName(),
+        ],
         keywords: [randWord(), randWord()],
       }
 
@@ -154,7 +159,7 @@ describe('Instanciando uma tecnologia existente', () => {
         updatedAt: new Date(),
         name: randCompanyName(),
         keywords: [randWord()],
-        aliases: [randWord()],
+        aliases: [randCompanyName()],
         logoUrl: randUrl(),
       }
 
@@ -174,20 +179,71 @@ describe('Instanciando uma tecnologia existente', () => {
   })
 
   describe('Retornando mensagem de incompatibilidade', () => {
-    test('Deve retornar um erro do id', () => {
+    test('Deve retornar um erro do keywords', () => {
       const data = {
-        id: 45454654654,
+        id: randomUUID(),
         createdAt: new Date(),
         updatedAt: new Date(),
         name: randCompanyName(),
+        aliases: [randCompanyName(), randCompanyName()],
       }
 
       const entity = Technology.create(
         data.name,
         undefined,
+        data.aliases,
+        undefined,
+        data.id,
+        data.createdAt,
+        data.updatedAt as any,
+      )
+
+      expect(isLeft(entity)).toBeTruthy()
+      expect(
+        (entity as Left<string>).value.startsWith('keywords: >> '),
+      ).toBeTruthy()
+    })
+
+    test('Deve retornar um erro do aliases', () => {
+      const data = {
+        id: randomUUID(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        name: randCompanyName(),
+        keywords: [randWord(), randWord()],
+      }
+
+      const entity = Technology.create(
+        data.name,
+        data.keywords,
         undefined,
         undefined,
-        data.id as any,
+        data.id,
+        data.createdAt,
+        data.updatedAt as any,
+      )
+
+      expect(isLeft(entity)).toBeTruthy()
+      expect(
+        (entity as Left<string>).value.startsWith('aliases: >> '),
+      ).toBeTruthy()
+    })
+
+    test('Deve retornar um erro do id', () => {
+      const data = {
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        name: randCompanyName(),
+        keywords: [randWord(), randWord(), randWord()],
+        aliases: [randCompanyName(), randCompanyName()],
+      }
+
+      const entity = Technology.create(
+        data.name,
+        data.keywords,
+        data.aliases,
+        undefined,
+        undefined as any,
         data.createdAt,
         data.updatedAt,
       )
@@ -202,12 +258,14 @@ describe('Instanciando uma tecnologia existente', () => {
         createdAt: new Date('asdas654'),
         updatedAt: new Date(),
         name: randCompanyName(),
+        keywords: [randWord(), randWord(), randWord()],
+        aliases: [randCompanyName(), randCompanyName()],
       }
 
       const entity = Technology.create(
         data.name,
-        undefined,
-        undefined,
+        data.keywords,
+        data.aliases,
         undefined,
         data.id,
         data.createdAt,
@@ -226,12 +284,14 @@ describe('Instanciando uma tecnologia existente', () => {
         createdAt: new Date(),
         updatedAt: 'new Date()',
         name: randCompanyName(),
+        keywords: [randWord(), randWord(), randWord()],
+        aliases: [randCompanyName(), randCompanyName()],
       }
 
       const entity = Technology.create(
         data.name,
-        undefined,
-        undefined,
+        data.keywords,
+        data.aliases,
         undefined,
         data.id,
         data.createdAt,
