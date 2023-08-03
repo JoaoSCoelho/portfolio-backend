@@ -6,10 +6,17 @@ import rootConfig from '../../jest.config'
 
 const rootDir = resolve(__dirname, '../..')
 
+{
+  // This block is a jest issue
+  delete rootConfig.collectCoverage
+  delete rootConfig.coverageProvider
+  delete rootConfig.projects
+}
+
 const config: Config = {
   ...rootConfig,
   rootDir,
-  displayName: 'end2end-tests',
+  displayName: 'e2e',
   setupFilesAfterEnv: ['<rootDir>/tests/e2e/jest-setup.ts'],
   testMatch: [
     '<rootDir>/tests/e2e/**/*.test.ts',

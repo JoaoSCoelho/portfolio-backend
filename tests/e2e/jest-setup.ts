@@ -4,6 +4,11 @@ beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URI!)
 })
 
+beforeEach(async () => {
+  if (!mongoose.connection.readyState)
+    await mongoose.connect(process.env.MONGO_URI!)
+})
+
 afterAll(async () => {
   await Promise.all(
     mongoose
