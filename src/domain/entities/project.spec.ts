@@ -114,7 +114,9 @@ describe('Instanciando um novo Project', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('name: →→ '),
+      ).toBeTruthy()
     })
 
     test('Deve retornar um erro do description', () => {
@@ -129,7 +131,9 @@ describe('Instanciando um novo Project', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('description: →→ '),
+      ).toBeTruthy()
     })
 
     test('Deve retornar um erro do repositoryUrl', () => {
@@ -146,7 +150,9 @@ describe('Instanciando um novo Project', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('repositoryUrl: →→ '),
+      ).toBeTruthy()
     })
 
     test('Deve retornar um erro do link', () => {
@@ -164,7 +170,9 @@ describe('Instanciando um novo Project', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('link: →→ '),
+      ).toBeTruthy()
     })
   })
 })
@@ -291,7 +299,7 @@ describe('Instanciando um Project existente', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect((project as Left<string>).value.startsWith('id: →→ ')).toBeTruthy()
     })
 
     test('Deve retornar um erro do createdAt', () => {
@@ -314,7 +322,9 @@ describe('Instanciando um Project existente', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('createdAt: →→ '),
+      ).toBeTruthy()
     })
 
     test('Deve retornar um erro do updatedAt', () => {
@@ -337,7 +347,9 @@ describe('Instanciando um Project existente', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect(typeof (project as Left<string>).value).toBe('string')
+      expect(
+        (project as Left<string>).value.startsWith('updatedAt: →→ '),
+      ).toBeTruthy()
     })
   })
 })

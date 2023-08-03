@@ -56,7 +56,9 @@ describe('Deve retornar uma mensagem de erro', () => {
 
     expect(project).toBeInstanceOf(Left)
     expect(
-      (project as Left<string>).value.startsWith('Deu merda aqui:\n'),
+      (project as Left<string>).value.startsWith(
+        'Deu merda aqui instanciando o project: →→ ',
+      ),
     ).toBeTruthy()
     expect(repository.db).toEqual([])
   })
