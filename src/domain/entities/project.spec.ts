@@ -115,7 +115,7 @@ describe('Instanciando um novo Project', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('name: →→ '),
+        (project as Left<string>).value.startsWith('name: >> '),
       ).toBeTruthy()
     })
 
@@ -132,7 +132,7 @@ describe('Instanciando um novo Project', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('description: →→ '),
+        (project as Left<string>).value.startsWith('description: >> '),
       ).toBeTruthy()
     })
 
@@ -151,7 +151,7 @@ describe('Instanciando um novo Project', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('repositoryUrl: →→ '),
+        (project as Left<string>).value.startsWith('repositoryUrl: >> '),
       ).toBeTruthy()
     })
 
@@ -171,7 +171,7 @@ describe('Instanciando um novo Project', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('link: →→ '),
+        (project as Left<string>).value.startsWith('link: >> '),
       ).toBeTruthy()
     })
   })
@@ -299,7 +299,7 @@ describe('Instanciando um Project existente', () => {
       )
 
       expect(isLeft(project)).toBeTruthy()
-      expect((project as Left<string>).value.startsWith('id: →→ ')).toBeTruthy()
+      expect((project as Left<string>).value.startsWith('id: >> ')).toBeTruthy()
     })
 
     test('Deve retornar um erro do createdAt', () => {
@@ -323,7 +323,7 @@ describe('Instanciando um Project existente', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('createdAt: →→ '),
+        (project as Left<string>).value.startsWith('createdAt: >> '),
       ).toBeTruthy()
     })
 
@@ -348,7 +348,7 @@ describe('Instanciando um Project existente', () => {
 
       expect(isLeft(project)).toBeTruthy()
       expect(
-        (project as Left<string>).value.startsWith('updatedAt: →→ '),
+        (project as Left<string>).value.startsWith('updatedAt: >> '),
       ).toBeTruthy()
     })
   })
