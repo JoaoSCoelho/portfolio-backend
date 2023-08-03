@@ -1,0 +1,207 @@
+{
+  // Place your portfolio-backend workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  "Base Controller": {
+    "scope": "javascript,typescript",
+    "prefix": "controller",
+    "isFileTemplate": true,
+    "body": [
+      "import { isLeft } from '../../../shared/either'",
+      "import { IController } from './ports/controller.port'",
+      "",
+      "export class ${1:ControllerName}Controller implements IController {",
+      "  constructor(",
+      "    private readonly ${2:middlewareOrUsecase}: ${3:IMiddlewareOrUsecaseInterface},",
+      "  ) {}",
+      "",
+      "  handle: IController['handle'] = async (req, res) => {",
+      "    $4",
+      "  }",
+      "}"
+    ]
+  },
+  "Base Controller Test": {
+    "scope": "javascript,typescript",
+    "prefix": "test controller",
+    "body": [
+      "const sendFunc = jest.fn()",
+      "",
+      "const body = {}",
+      "",
+      "const mockReq = {",
+      "  headers: { authorization: $1 },",
+      "  body,",
+      "} as Request",
+      "const mockRes = {",
+      "  status: jest.fn(() => ({ send: sendFunc })),",
+      "  send: sendFunc,",
+      "} as unknown as Response",
+      "",
+      "const middleware = new ${2:Middleware}()",
+      "const usecase = new ${3:UseCase}()",
+      "const controller: IController = new ${4:Controller}(",
+      "  middleware,",
+      "  usecase,",
+      ")",
+      "",
+      "await controller.handle(mockReq, mockRes)",
+      "",
+      "expect(middleware.execute).toHaveBeenCalledWith($5)",
+      "expect(usecase.execute).toHaveBeenCalledWith($6)",
+      "expect(mockRes.status).toHaveBeenCalledWith($7)",
+      "expect(sendFunc).toHaveBeenCalledWith($8)"
+    ],
+  },
+  "Base Middleware Port": {
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "prefix": "port middleware",
+    "body": [
+      "import { Either } from '../../../shared/either'",
+      "",
+      "export abstract class ${1:ISomeMiddleware} {",
+      "  abstract execute(): Either<string, $2>",
+      "}",
+    ],
+  },
+  "Base Middleware": {
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "prefix": "middleware",
+    "body": [
+      "import { left } from '../../shared/either'",
+      "import { ${1:ISomeMiddleware} } from './ports/$2.middleware.port'",
+      "",
+      "export class ${3:SomeMiddleware} implements ${1:ISomeMiddleware} {",
+      "  constructor(private readonly $4: $5) {}",
+      "",
+      "  execute: ${1:ISomeMiddleware}['execute'] = ($6) => {",
+      "    $7",
+      "  }",
+      "}"
+    ],
+    "description": ""
+  },
+  "UseCase Port": {
+    "prefix": "port usecase",
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "body": [
+      "import { Either } from '../../../shared/either'",
+      "",
+      "export abstract class ${1:ISomethingUC} {",
+      "  abstract execute($2): Promise<Either<string, $3>>",
+      "}"
+    ],
+    "description": ""
+  },
+  "UseCase": {
+    "prefix": "usecase",
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "body": [
+      "import { ${1:ISomethingUC} } from './ports/$2.usecase.port'",
+      "",
+      "export class ${3:SomethingUC} implements ${1:ISomethingUC} {",
+      "  constructor(private readonly $4: $5) {}",
+      "",
+      "  execute: ${1:ISomethingUC}['execute'] = async () => {",
+      "    $6",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Value Object": {
+    "prefix": "value-object",
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "body": [
+      "import { Either, left } from '../../../shared/either'",
+      "",
+      "export class ${1:VO} extends ${2:TypeConstructor} {",
+      "  static type = '$3'",
+      "",
+      "  static create(${4:vO}: $5): Either<string, ${1:VO}> {",
+      "    if (typeof ${4:vO} !== this.type) return left('O tipo disso aí não tem nada a ver')",
+      "",
+      "    return ${2:TypeConstructor}(${4:vO})",
+      "  }",
+      "}"
+    ],
+    "description": ""
+  },
+  "Base Entity": {
+    "prefix": "entity",
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "body": [
+      "import { Entity, EntityDTO, EntityParams } from '../../core/domain/entity'",
+      "import { Either, isLeft, left } from '../../shared/either'",
+      "import { ID } from '../aggregates/value-objects/id'",
+      "import { Moment } from '../aggregates/value-objects/moment'",
+      "",
+      "export class ${1:Entity} extends Entity {",
+      "  private constructor(",
+      "    public readonly ${2:prop}: ${3:Prop},",
+      "    ...params: EntityParams",
+      "  ) {",
+      "    super(...params)",
+      "    Object.freeze(this)",
+      "  }",
+      "",
+      "  static create(",
+      "    _${2:prop}: string,",
+      "    ...params: EntityDTO",
+      "  ): Either<string, ${1:Entity}> {",
+      "    // Verifica para uma nova entidade ----------------------------------------",
+      "",
+      "    const ${2:prop} = ${3:Prop}.create(_${2:prop})",
+      "    if (isLeft(${2:prop})) return left('${2:prop}: >> ' + ${2:prop}.value)",
+      "",
+      "    if (!params.length)",
+      "      return new ${1:Entity}(${2:prop})",
+      "",
+      "    // Verifica para uma entidade já existente ----------------------------------------",
+      "",
+      "    const [_id, _createdAt, _updatedAt] = params",
+      "",
+      "    const id = ID.create(_id)",
+      "    if (isLeft(id)) return left('id: >> ' + id.value)",
+      "",
+      "    const createdAt = Moment.create(_createdAt)",
+      "    if (isLeft(createdAt)) return left('createdAt: >> ' + createdAt.value)",
+      "",
+      "    const updatedAt = Moment.create(_updatedAt)",
+      "    if (isLeft(updatedAt)) return left('updatedAt: >> ' + updatedAt.value)",
+      "",
+      "    return new ${1:Entity}(",
+      "      ${2:prop},",
+      "      id,",
+      "      createdAt,",
+      "      updatedAt,",
+      "    )",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Factory": {
+    "prefix": "factory",
+    "scope": "javascript,typescript",
+    "isFileTemplate": true,
+    "body": [
+      "export function make$1Controller() {",
+      "  const $2UC = new $1UC(projectsRepository)",
+      "  return new $1Controller($2UC)",
+      "}"
+    ],
+    "description": ""
+  }
+}
