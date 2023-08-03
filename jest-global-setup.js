@@ -1,7 +1,5 @@
 const { config } = require("dotenv")
 
-console.log('rodando')
-
 module.exports = async () => {
   config()
 
