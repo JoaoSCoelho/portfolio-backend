@@ -10,7 +10,7 @@ test('Deve instanciar um novo project-name', () => {
 })
 
 describe('Erros de incompatibilidade', () => {
-  test('Erro por O tipo disso aí não tem nada a ver', () => {
+  test('Erro por tipo inválido', () => {
     const name = 46416546
 
     const projectName = ProjectName.create(name as any)
