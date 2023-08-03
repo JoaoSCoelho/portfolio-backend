@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test:all": "jest",
-    "test:unit": "jest --selectProjects unit",
+    "test:unit": "jest --selectProjects unit --cache",
     "test:e2e": "jest --selectProjects e2e --runInBand",
     "dev": "nodemon",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
