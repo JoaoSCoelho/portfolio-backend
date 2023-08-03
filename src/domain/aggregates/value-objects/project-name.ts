@@ -1,6 +1,7 @@
 import { Either, left } from '../../../shared/either'
+import { IValueObject } from './ports/value-object.port'
 
-export class ProjectName extends String {
+export class ProjectName extends String implements IValueObject {
   static type = 'string'
   static maximumLength = 2048
 

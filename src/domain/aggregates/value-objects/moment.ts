@@ -1,6 +1,7 @@
 import { Either, left } from '../../../shared/either'
+import { IValueObject } from './ports/value-object.port'
 
-export class Moment extends Date {
+export class Moment extends Date implements IValueObject {
   static type = 'object'
 
   static create(moment: Date): Either<string, Moment> {
