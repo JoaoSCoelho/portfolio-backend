@@ -75,6 +75,7 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
   - [ ] Help
   - [x] Create project
   - [x] Get projects
+  - [x] Criar snippets
 
 ## Licença
 
