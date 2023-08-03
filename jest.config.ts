@@ -105,7 +105,8 @@ const config: Config = {
   // preset: undefined,
 
   // Run tests from one or more projects
-  // projects: undefined,
+  projects: ['<rootDir>/tests/e2e', '<rootDir>'],
+  displayName: 'unit',
 
   // Use this configuration option to add custom reporters to Jest
   // reporters: undefined,

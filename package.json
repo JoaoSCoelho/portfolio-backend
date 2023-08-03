@@ -4,8 +4,9 @@
   "description": "Rest API do meu portfolio pessoal de projetos",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
-    "test:e2e": "jest --projects ./tests/e2e",
+    "test:all": "jest",
+    "test:unit": "jest --selectProjects unit",
+    "test:e2e": "jest --selectProjects e2e --runInBand",
     "dev": "nodemon",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "start": "node dist"

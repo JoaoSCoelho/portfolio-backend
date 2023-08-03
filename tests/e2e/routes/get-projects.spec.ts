@@ -53,19 +53,15 @@ const predefinedProjects = [
 ]
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGO_URI!)
   await mongoose.model('Project').create(...predefinedProjects)
 })
 
-afterAll(async () => {
-  await mongoose.model('Project').deleteMany()
-  await mongoose.disconnect()
-})
+describe('(GET) /api/projects', () => {
+  test('Deve retornar todos os projects do banco', async () => {
+    const response = await supertest(app).get('/api/projects').expect(200)
 
-test('Deve retornar todos os projects do banco', async () => {
-  const response = await supertest(app).get('/api/projects').expect(200)
-
-  expect(response.body).toEqual({
-    projects: expect.arrayContaining(predefinedProjects),
+    expect(response.body).toEqual({
+      projects: expect.arrayContaining(predefinedProjects),
+    })
   })
 })

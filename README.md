@@ -49,10 +49,13 @@ $ npm run build
 $ npm run start
 
 # Para executar os testes unitários
-$ npm run test
+$ npm run test:unit
 
 # Para executar os testes funcionais
 $ npm run test:e2e
+
+# Para rodar todos os testes
+$ npm run test:all
 ```
 
 Agora você já pode acessar: `http://localhost:{ENV.PORT}`
