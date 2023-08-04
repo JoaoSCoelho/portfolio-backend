@@ -5,8 +5,13 @@ export class GetProjectsController implements IController {
   constructor(private readonly getProjectsUC: IGetProjectsUC) {}
 
   handle: IController['handle'] = async (_req, res) => {
-    const projects = await this.getProjectsUC.execute()
+    try {
+      const projects = await this.getProjectsUC.execute()
 
-    res.send({ projects })
+      res.send({ projects })
+    } catch (error) {
+      console.error(error)
+      res.status(500).send({ message: 'Houve um erro nosso aqui. Desculpa!' })
+    }
   }
 }

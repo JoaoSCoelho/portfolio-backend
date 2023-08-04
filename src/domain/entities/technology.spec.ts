@@ -11,7 +11,7 @@ describe('Instanciando uma nova Technology', () => {
         name: randCompanyName(),
       }
 
-      const technology = Technology.create(technologyData.name)
+      const technology = Technology.create(technologyData)
 
       expect(technology).toBeInstanceOf(Technology)
       expect(technology).toEqual({
@@ -32,12 +32,7 @@ describe('Instanciando uma nova Technology', () => {
         logoUrl: randUrl(),
       }
 
-      const technology = Technology.create(
-        technologyData.name,
-        technologyData.keywords,
-        technologyData.aliases,
-        technologyData.logoUrl,
-      )
+      const technology = Technology.create(technologyData)
 
       expect(technology).toBeInstanceOf(Technology)
       expect(technology).toEqual({
@@ -58,7 +53,7 @@ describe('Instanciando uma nova Technology', () => {
         name: 'a'.repeat(100),
       }
 
-      const entity = Technology.create(data.name)
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -69,10 +64,10 @@ describe('Instanciando uma nova Technology', () => {
     test('Deve retornar um erro do keywords', () => {
       const data = {
         name: randCompanyName(),
-        keywords: () => {},
+        keywords: (() => {}) as any,
       }
 
-      const entity = Technology.create(data.name, data.keywords as any)
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -83,14 +78,10 @@ describe('Instanciando uma nova Technology', () => {
     test('Deve retornar um erro do aliases', () => {
       const data = {
         name: randCompanyName(),
-        aliases: randCompanyName(),
+        aliases: randCompanyName() as any,
       }
 
-      const entity = Technology.create(
-        data.name,
-        undefined,
-        data.aliases as any,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -104,12 +95,7 @@ describe('Instanciando uma nova Technology', () => {
         logoUrl: randWord(),
       }
 
-      const entity = Technology.create(
-        data.name,
-        undefined,
-        undefined,
-        data.logoUrl,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -138,15 +124,7 @@ describe('Instanciando uma tecnologia existente', () => {
         keywords: [randWord(), randWord()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        data.aliases,
-        undefined,
-        data.id,
-        data.createdAt,
-        data.updatedAt,
-      )
+      const entity = Technology.create(data)
 
       expect(entity).toBeInstanceOf(Technology)
       expect(entity).toEqual(data)
@@ -163,15 +141,7 @@ describe('Instanciando uma tecnologia existente', () => {
         logoUrl: randUrl(),
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        data.aliases,
-        data.logoUrl,
-        data.id,
-        data.createdAt,
-        data.updatedAt,
-      )
+      const entity = Technology.create(data)
 
       expect(entity).toBeInstanceOf(Technology)
       expect(entity).toEqual(data)
@@ -188,15 +158,7 @@ describe('Instanciando uma tecnologia existente', () => {
         aliases: [randCompanyName(), randCompanyName()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        undefined,
-        data.aliases,
-        undefined,
-        data.id,
-        data.createdAt,
-        data.updatedAt as any,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -213,15 +175,7 @@ describe('Instanciando uma tecnologia existente', () => {
         keywords: [randWord(), randWord()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        undefined,
-        undefined,
-        data.id,
-        data.createdAt,
-        data.updatedAt as any,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -238,15 +192,7 @@ describe('Instanciando uma tecnologia existente', () => {
         aliases: [randCompanyName(), randCompanyName()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        data.aliases,
-        undefined,
-        undefined as any,
-        data.createdAt,
-        data.updatedAt,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect((entity as Left<string>).value.startsWith('id: >> ')).toBeTruthy()
@@ -262,15 +208,7 @@ describe('Instanciando uma tecnologia existente', () => {
         aliases: [randCompanyName(), randCompanyName()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        data.aliases,
-        undefined,
-        data.id,
-        data.createdAt,
-        data.updatedAt,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(
@@ -282,21 +220,13 @@ describe('Instanciando uma tecnologia existente', () => {
       const data = {
         id: randomUUID(),
         createdAt: new Date(),
-        updatedAt: 'new Date()',
+        updatedAt: 'new Date()' as any,
         name: randCompanyName(),
         keywords: [randWord(), randWord(), randWord()],
         aliases: [randCompanyName(), randCompanyName()],
       }
 
-      const entity = Technology.create(
-        data.name,
-        data.keywords,
-        data.aliases,
-        undefined,
-        data.id,
-        data.createdAt,
-        data.updatedAt as any,
-      )
+      const entity = Technology.create(data)
 
       expect(isLeft(entity)).toBeTruthy()
       expect(

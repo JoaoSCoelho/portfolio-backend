@@ -19,13 +19,30 @@ export class CreateProjectController implements IController {
       if (isLeft(admin)) return res.status(401).send({ message: admin.value })
 
       // Chama o usecase
-      const { name, description, repositoryUrl, link } = req.body
+      const {
+        name,
+        description,
+        repositoryUrl,
+        link,
+        slug,
+        usedTechnologies,
+        features,
+        keywords,
+        bannerUrl,
+        previewImageUrl,
+      } = req.body
 
       const project = await this.createProjectUC.execute({
         name,
         description,
         repositoryUrl,
         link,
+        slug,
+        usedTechnologies,
+        features,
+        keywords,
+        bannerUrl,
+        previewImageUrl,
       })
 
       if (isLeft(project))

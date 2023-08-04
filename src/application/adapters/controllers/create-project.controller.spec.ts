@@ -1,4 +1,11 @@
-import { randCompanyName, randParagraph } from '@ngneat/falso'
+import {
+  randCompanyName,
+  randParagraph,
+  randPhrase,
+  randSlug,
+  randUrl,
+  randWord,
+} from '@ngneat/falso'
 import { Request, Response } from 'express'
 
 import { FakeAdminMiddleware } from '../../../../tests/middlewares/fake-admin.middleware'
@@ -32,6 +39,82 @@ test('Deve chamar o usecase', async () => {
 
   expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
   expect(usecase.execute).toHaveBeenCalledWith(projectData)
+  expect(sendFunc).toHaveBeenCalledWith({ project: expect.any(Object) })
+  expect(mockRes.status).toHaveBeenCalledWith(201)
+})
+
+test('Deve chamar o usecase apenas com as props que forem do usecase', async () => {
+  const sendFunc = jest.fn()
+
+  const body = {
+    name: randCompanyName(),
+    description: randParagraph(),
+    nousecaseprop: 'something',
+  }
+
+  const mockReq = {
+    headers: { authorization: process.env.ADMIN_AUTHORIZATION },
+    body,
+  } as Request
+  const mockRes = {
+    status: jest.fn(() => ({ send: sendFunc })),
+    send: sendFunc,
+  } as unknown as Response
+
+  const middleware = new FakeAdminMiddleware(process.env.ADMIN_AUTHORIZATION!)
+  const usecase = new FakeCreateProjectUC()
+  const controller: IController = new CreateProjectController(
+    middleware,
+    usecase,
+  )
+
+  await controller.handle(mockReq, mockRes)
+
+  expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
+  expect(usecase.execute).toHaveBeenCalledWith({
+    name: body.name,
+    description: body.description,
+  })
+  expect(sendFunc).toHaveBeenCalledWith({ project: expect.any(Object) })
+  expect(mockRes.status).toHaveBeenCalledWith(201)
+})
+
+test('Deve chamar o usecase com todas as props do usecase', async () => {
+  const sendFunc = jest.fn()
+
+  const body = {
+    name: randCompanyName(),
+    description: randParagraph(),
+    usedTechnologies: [randCompanyName()],
+    features: [randPhrase()],
+    keywords: [randWord()],
+    slug: randSlug(),
+    repositoryUrl: randUrl(),
+    link: randUrl(),
+    bannerUrl: randUrl(),
+    previewImageUrl: randUrl(),
+  }
+
+  const mockReq = {
+    headers: { authorization: process.env.ADMIN_AUTHORIZATION },
+    body,
+  } as Request
+  const mockRes = {
+    status: jest.fn(() => ({ send: sendFunc })),
+    send: sendFunc,
+  } as unknown as Response
+
+  const middleware = new FakeAdminMiddleware(process.env.ADMIN_AUTHORIZATION!)
+  const usecase = new FakeCreateProjectUC()
+  const controller: IController = new CreateProjectController(
+    middleware,
+    usecase,
+  )
+
+  await controller.handle(mockReq, mockRes)
+
+  expect(middleware.execute).toHaveBeenCalledWith(mockReq.headers.authorization)
+  expect(usecase.execute).toHaveBeenCalledWith(body)
   expect(sendFunc).toHaveBeenCalledWith({ project: expect.any(Object) })
   expect(mockRes.status).toHaveBeenCalledWith(201)
 })

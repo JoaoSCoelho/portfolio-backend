@@ -7,6 +7,13 @@ import { Moment } from '../aggregates/value-objects/moment'
 import { TechnologyName } from '../aggregates/value-objects/technology-name'
 import { WebUrl } from '../aggregates/value-objects/web-url'
 
+export type TechnologyDTO = EntityDTO & {
+  name: string
+  keywords?: string[]
+  aliases?: string[]
+  logoUrl?: string
+}
+
 export class Technology extends Entity {
   private constructor(
     public readonly name: TechnologyName,
@@ -19,13 +26,15 @@ export class Technology extends Entity {
     Object.freeze(this)
   }
 
-  static create(
-    _name: string,
-    _keywords?: string[],
-    _aliases?: string[],
-    _logoUrl?: string,
-    ...params: EntityDTO
-  ): Either<string, Technology> {
+  static create({
+    name: _name,
+    keywords: _keywords,
+    aliases: _aliases,
+    logoUrl: _logoUrl,
+    id: _id,
+    createdAt: _createdAt,
+    updatedAt: _updatedAt,
+  }: TechnologyDTO): Either<string, Technology> {
     // Verifica para uma nova entidade ----------------------------------------
 
     const name = TechnologyName.create(_name)
@@ -42,19 +51,18 @@ export class Technology extends Entity {
     const logoUrl = _logoUrl !== undefined ? WebUrl.create(_logoUrl) : undefined
     if (isLeft(logoUrl)) return left(`logoUrl: >> ${logoUrl.value}`)
 
-    if (!params.length) return new Technology(name, keywords, aliases, logoUrl)
+    if (!_id && !_createdAt && !_updatedAt)
+      return new Technology(name, keywords, aliases, logoUrl)
 
     // Verifica para uma entidade já existente ----------------------------------------
 
-    const [_id, _createdAt, _updatedAt] = params
-
-    const id = ID.create(_id)
+    const id = ID.create(_id!)
     if (isLeft(id)) return left('id: >> ' + id.value)
 
-    const createdAt = Moment.create(_createdAt)
+    const createdAt = Moment.create(_createdAt!)
     if (isLeft(createdAt)) return left('createdAt: >> ' + createdAt.value)
 
-    const updatedAt = Moment.create(_updatedAt)
+    const updatedAt = Moment.create(_updatedAt!)
     if (isLeft(updatedAt)) return left('updatedAt: >> ' + updatedAt.value)
 
     keywords = List.create(_keywords as string[], Keyword)
