@@ -16,4 +16,8 @@ export class InMemoryTechnologiesRepository implements ITechnologiesRepository {
   create: ITechnologiesRepository['create'] = async (technology) => {
     this.db.push(technology)
   }
+
+  all: ITechnologiesRepository['all'] = async () => {
+    return this.db
+  }
 }

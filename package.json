@@ -1,6 +1,6 @@
 {
   "name": "portfolio-backend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Rest API do meu portfolio pessoal de projetos",
   "main": "index.ts",
   "scripts": {

@@ -65,10 +65,10 @@ Agora você já pode acessar: `http://localhost:{ENV.PORT}`
 
 Você pode usar algum programa para testar as requisições, como por exemplo o [Insômnia](https://insomnia.rest/download).
 
-[Insômnia collection](resources/Insomnia_2023-08-03.json) - Coleção de requisições da API no Insômnia
+[Insômnia collection](resources/Insomnia_2023-08-04.json) - Coleção de requisições da API no Insômnia
 
 ## Status
-> **🚧 Em construção... 🚧 v0.0.2**
+> **🚧 Em construção... 🚧 v0.0.3**
 
 ### Features
 
@@ -79,6 +79,7 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
   - [x] Create project
   - [x] Get projects
   - [x] Create technology
+  - [x] Get technologies
 - [x] Criar snippets
 
 ## Licença
