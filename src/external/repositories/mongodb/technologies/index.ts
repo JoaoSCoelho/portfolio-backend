@@ -15,4 +15,8 @@ export class MongoTechnologiesRepository implements ITechnologiesRepository {
 
       return true
     }
+
+  create: ITechnologiesRepository['create'] = async (technology) => {
+    await this.model.create(technology)
+  }
 }

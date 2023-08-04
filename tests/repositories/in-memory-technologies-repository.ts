@@ -12,4 +12,8 @@ export class InMemoryTechnologiesRepository implements ITechnologiesRepository {
     async (names) => {
       return names.every((name) => this.db.find((v) => v.name === name))
     }
+
+  create: ITechnologiesRepository['create'] = async (technology) => {
+    this.db.push(technology)
+  }
 }
