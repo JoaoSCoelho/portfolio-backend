@@ -54,7 +54,10 @@ $ npm run test:unit
 # Para executar os testes funcionais
 $ npm run test:e2e
 
-# Para rodar todos os testes
+# Para executar os testes do banco de dados
+$ npm run test:db
+
+# Para rodar todos os testes (exceto banco de dados)
 $ npm run test:all
 ```
 
