@@ -21,7 +21,7 @@ export class CreateProjectUC implements ICreateProjectUC {
     // Confere se tem outro project com o mesmo slug
 
     const existsWithThisSlug = await this.projectsRepository.existsWithThisSlug(
-      String(project.slug),
+      project.slug,
     )
 
     if (existsWithThisSlug) {
