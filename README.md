@@ -7,6 +7,7 @@ Tabela de conteúdos
 
 - [portfolio-backend](#portfolio-backend)
 - [Tabela de conteúdos](#tabela-de-conteúdos)
+  - [Documentação](#documentação)
   - [Instalação](#instalação)
   - [Como rodar](#como-rodar)
   - [Status](#status)
@@ -14,6 +15,9 @@ Tabela de conteúdos
   - [Licença](#licença)
   - [Tecnologias utilizadas](#tecnologias-utilizadas)
   - [Para devs](#para-devs)
+
+## Documentação
+[**https://app.swaggerhub.com/apis-docs/JoaoSCoelho/Portfolio/1.0.0**](https://app.swaggerhub.com/apis-docs/JoaoSCoelho/Portfolio/1.0.0)
 
 ## Instalação
 
@@ -98,9 +102,10 @@ Muitos conceitos de **Clean Architecture** e **S.O.L.I.D** foram aplicados nessa
 ![Express logo](resources/express.png)
 ![MongoDB logo](resources/mongodb.png)
 ![Jest logo](resources/jest.png)
+![Swagger](resources/swagger.png)
 </div>
 
-Node.JS | TypeScript | Express | MongoDB | Jest |
+Node.JS | TypeScript | Express | MongoDB | Jest | Swagger
 
 ## Para devs
 
