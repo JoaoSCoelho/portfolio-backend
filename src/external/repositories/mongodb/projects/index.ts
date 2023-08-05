@@ -67,10 +67,11 @@ export class MongoProjectsRepository implements IProjectsRepository {
       { id },
       {
         ...obj,
-        $unset: propsToRemove?.reduce(
-          (prevObj, prop) => ({ ...prevObj, [prop]: '' }),
-          {},
-        ),
+        $unset:
+          propsToRemove?.reduce(
+            (prevObj, prop) => ({ ...prevObj, [prop]: '' }),
+            {},
+          ) ?? {},
       },
       {
         new: true,
