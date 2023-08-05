@@ -12,7 +12,7 @@ import { Slug } from '../aggregates/value-objects/slug'
 import { TechnologyName } from '../aggregates/value-objects/technology-name'
 import { WebUrl } from '../aggregates/value-objects/web-url'
 
-type ProjectDTO = EntityDTO & {
+export type ProjectDTO = EntityDTO & {
   name: string
   description: string
   usedTechnologies?: string[]
