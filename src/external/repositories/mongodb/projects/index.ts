@@ -1,7 +1,7 @@
 import { Model } from 'mongoose'
 
 import { Project } from '../../../../domain/entities/project'
-import { everyIsRight } from '../../../../shared/either'
+import { everyIsRight, isLeft, left } from '../../../../shared/either'
 import { IProjectsRepository } from '../../ports/projects-repository.port'
 
 export class MongoProjectsRepository implements IProjectsRepository {
@@ -60,5 +60,79 @@ export class MongoProjectsRepository implements IProjectsRepository {
     if (exists === null) return false
 
     return true
+  }
+
+  update: IProjectsRepository['update'] = async (id, obj, propsToRemove) => {
+    const updatedDbProject = await this.model.findOneAndUpdate(
+      { id },
+      {
+        ...obj,
+        $unset:
+          propsToRemove?.reduce(
+            (prevObj, prop) => ({ ...prevObj, [prop]: '' }),
+            {},
+          ) ?? {},
+      },
+      {
+        new: true,
+      },
+    )
+
+    if (updatedDbProject === null) return left('Não existe project com este id')
+
+    const project = Project.create({
+      name: updatedDbProject.name,
+      description: updatedDbProject.description,
+      repositoryUrl: updatedDbProject.repositoryUrl,
+      link: updatedDbProject.link,
+      usedTechnologies: updatedDbProject.usedTechnologies,
+      features: updatedDbProject.features,
+      keywords: updatedDbProject.keywords,
+      slug: updatedDbProject.slug,
+      bannerUrl: updatedDbProject.bannerUrl,
+      previewImageUrl: updatedDbProject.previewImageUrl,
+      id: updatedDbProject.id,
+      createdAt: updatedDbProject.createdAt,
+      updatedAt: updatedDbProject.updatedAt,
+    })
+
+    if (isLeft(project)) throw new Error()
+
+    return project
+  }
+
+  removeProps: IProjectsRepository['removeProps'] = async (id, props) => {
+    const updatedDbProject = await this.model.findOneAndUpdate(
+      { id },
+      {
+        $unset: props.reduce(
+          (prevObj, prop) => ({ ...prevObj, [prop]: '' }),
+          {},
+        ),
+      },
+      { new: true },
+    )
+
+    if (updatedDbProject === null) return left('Não existe project com este id')
+
+    const project = Project.create({
+      name: updatedDbProject.name,
+      description: updatedDbProject.description,
+      repositoryUrl: updatedDbProject.repositoryUrl,
+      link: updatedDbProject.link,
+      usedTechnologies: updatedDbProject.usedTechnologies,
+      features: updatedDbProject.features,
+      keywords: updatedDbProject.keywords,
+      slug: updatedDbProject.slug,
+      bannerUrl: updatedDbProject.bannerUrl,
+      previewImageUrl: updatedDbProject.previewImageUrl,
+      id: updatedDbProject.id,
+      createdAt: updatedDbProject.createdAt,
+      updatedAt: updatedDbProject.updatedAt,
+    })
+
+    if (isLeft(project)) throw new Error()
+
+    return project
   }
 }

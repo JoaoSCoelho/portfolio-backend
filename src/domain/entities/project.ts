@@ -12,7 +12,7 @@ import { Slug } from '../aggregates/value-objects/slug'
 import { TechnologyName } from '../aggregates/value-objects/technology-name'
 import { WebUrl } from '../aggregates/value-objects/web-url'
 
-type ProjectDTO = EntityDTO & {
+export type ProjectDTO = {
   name: string
   description: string
   usedTechnologies?: string[]
@@ -24,6 +24,8 @@ type ProjectDTO = EntityDTO & {
   bannerUrl?: string
   previewImageUrl?: string
 }
+
+type ProjectCreateDTO = EntityDTO & ProjectDTO
 
 export class Project extends Entity {
   private constructor(
@@ -57,7 +59,7 @@ export class Project extends Entity {
     id: _id,
     createdAt: _createdAt,
     updatedAt: _updatedAt,
-  }: ProjectDTO): Either<string, Project> {
+  }: ProjectCreateDTO): Either<string, Project> {
     // Verifica para uma nova entidade ----------------------------------------
 
     const name = ProjectName.create(_name)

@@ -7,12 +7,14 @@ import { Moment } from '../aggregates/value-objects/moment'
 import { TechnologyName } from '../aggregates/value-objects/technology-name'
 import { WebUrl } from '../aggregates/value-objects/web-url'
 
-export type TechnologyDTO = EntityDTO & {
+export type TechnologyDTO = {
   name: string
   keywords?: string[]
   aliases?: string[]
   logoUrl?: string
 }
+
+type TechnologyCreateDTO = EntityDTO & TechnologyDTO
 
 export class Technology extends Entity {
   private constructor(
@@ -34,7 +36,7 @@ export class Technology extends Entity {
     id: _id,
     createdAt: _createdAt,
     updatedAt: _updatedAt,
-  }: TechnologyDTO): Either<string, Technology> {
+  }: TechnologyCreateDTO): Either<string, Technology> {
     // Verifica para uma nova entidade ----------------------------------------
 
     const name = TechnologyName.create(_name)

@@ -70,7 +70,7 @@ Agora você já pode acessar: `http://localhost:{ENV.PORT}`
 
 Você pode usar algum programa para testar as requisições, como por exemplo o [Insômnia](https://insomnia.rest/download).
 
-[Insômnia collection](resources/Insomnia_2023-08-04.json) - Coleção de requisições da API no Insômnia
+[Insômnia collection](resources/Insomnia_2023-08-05.json) - Coleção de requisições da API no Insômnia
 
 ## Status
 > **🚧 Em construção... 🚧**
