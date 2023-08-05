@@ -11,16 +11,36 @@ export class MongoProjectsRepository implements IProjectsRepository {
     const dbProjects = await this.model.find()
 
     const projects = dbProjects.map(
-      ({ name, description, repositoryUrl, link, id, createdAt, updatedAt }) =>
-        Project.create(
+      ({
+        name,
+        description,
+        repositoryUrl,
+        link,
+        usedTechnologies,
+        features,
+        keywords,
+        slug,
+        bannerUrl,
+        previewImageUrl,
+        id,
+        createdAt,
+        updatedAt,
+      }) =>
+        Project.create({
           name,
           description,
           repositoryUrl,
           link,
+          usedTechnologies,
+          features,
+          keywords,
+          slug,
+          bannerUrl,
+          previewImageUrl,
           id,
-          new Date(createdAt),
-          new Date(updatedAt),
-        ),
+          createdAt: new Date(createdAt),
+          updatedAt: new Date(updatedAt),
+        }),
     )
 
     if (!everyIsRight(projects)) throw new Error()
@@ -30,5 +50,15 @@ export class MongoProjectsRepository implements IProjectsRepository {
 
   create: IProjectsRepository['create'] = async (project) => {
     await this.model.create(project)
+  }
+
+  existsWithThisSlug: IProjectsRepository['existsWithThisSlug'] = async (
+    slug,
+  ) => {
+    const exists = await this.model.exists({ slug })
+
+    if (exists === null) return false
+
+    return true
   }
 }

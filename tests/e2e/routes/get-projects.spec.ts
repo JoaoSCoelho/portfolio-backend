@@ -1,4 +1,11 @@
-import { randCompanyName, randParagraph, randUrl } from '@ngneat/falso'
+import {
+  randCompanyName,
+  randParagraph,
+  randPhrase,
+  randSlug,
+  randUrl,
+  randWord,
+} from '@ngneat/falso'
 import { randomUUID } from 'crypto'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
@@ -13,27 +20,39 @@ const predefinedProjects = [
       name: randCompanyName(),
       description: randParagraph(),
       id: randomUUID(),
+      usedTechnologies: [randCompanyName(), randCompanyName()],
+      features: [randPhrase(), randPhrase()],
+      keywords: [randWord(), randWord()],
+      slug: randSlug(),
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
     })),
   ...'.'
-    .repeat(3)
+    .repeat(2)
     .split('')
     .map(() => ({
       name: randCompanyName(),
       description: randParagraph(),
       repositoryUrl: randUrl(),
+      usedTechnologies: [randCompanyName(), randCompanyName()],
+      features: [randPhrase(), randPhrase()],
+      keywords: [randWord(), randWord()],
+      slug: randSlug(),
       id: randomUUID(),
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
     })),
   ...'.'
-    .repeat(3)
+    .repeat(2)
     .split('')
     .map(() => ({
       name: randCompanyName(),
       description: randParagraph(),
       link: randUrl(),
+      usedTechnologies: [randCompanyName(), randCompanyName()],
+      features: [randPhrase(), randPhrase()],
+      keywords: [randWord(), randWord()],
+      slug: randSlug(),
       id: randomUUID(),
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
@@ -46,6 +65,44 @@ const predefinedProjects = [
       description: randParagraph(),
       repositoryUrl: randUrl(),
       link: randUrl(),
+      usedTechnologies: [randCompanyName(), randCompanyName()],
+      features: [randPhrase(), randPhrase()],
+      keywords: [randWord(), randWord()],
+      slug: randSlug(),
+      id: randomUUID(),
+      createdAt: new Date().toJSON(),
+      updatedAt: new Date().toJSON(),
+    })),
+  ...'.'
+    .repeat(2)
+    .split('')
+    .map(() => ({
+      name: randCompanyName(),
+      description: randParagraph(),
+      repositoryUrl: randUrl(),
+      link: randUrl(),
+      usedTechnologies: [],
+      features: [],
+      keywords: [],
+      slug: randSlug(),
+      id: randomUUID(),
+      createdAt: new Date().toJSON(),
+      updatedAt: new Date().toJSON(),
+    })),
+  ...'.'
+    .repeat(2)
+    .split('')
+    .map(() => ({
+      name: randCompanyName(),
+      description: randParagraph(),
+      repositoryUrl: randUrl(),
+      link: randUrl(),
+      bannerUrl: randUrl(),
+      previewImageUrl: randUrl(),
+      usedTechnologies: [randCompanyName(), randCompanyName()],
+      features: [randPhrase(), randPhrase()],
+      keywords: [randWord(), randWord()],
+      slug: randSlug(),
       id: randomUUID(),
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),

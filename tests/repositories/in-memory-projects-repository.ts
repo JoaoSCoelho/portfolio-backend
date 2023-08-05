@@ -15,4 +15,10 @@ export class InMemoryProjectsRepository implements IProjectsRepository {
   create: IProjectsRepository['create'] = async (project) => {
     this.db.push(project)
   }
+
+  existsWithThisSlug: IProjectsRepository['existsWithThisSlug'] = async (
+    slug,
+  ) => {
+    return !!this.db.find((p) => p.slug === slug)
+  }
 }

@@ -10,7 +10,7 @@ test('Deve instanciar um novo project-description', () => {
 })
 
 describe('Erros de incompatibilidade', () => {
-  test('Erro por O tipo disso aí não tem nada a ver', () => {
+  test('Erro por tipo inválido', () => {
     const description = 46416546
 
     const projectDescription = ProjectDescription.create(description as any)

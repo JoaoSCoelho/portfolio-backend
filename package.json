@@ -1,12 +1,13 @@
 {
   "name": "portfolio-backend",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Rest API do meu portfolio pessoal de projetos",
   "main": "index.ts",
   "scripts": {
-    "test:all": "jest",
-    "test:unit": "jest --selectProjects unit",
+    "test:all": "jest --ignoreProjects db",
+    "test:unit": "jest --selectProjects unit --cache",
     "test:e2e": "jest --selectProjects e2e --runInBand",
+    "test:db": "jest --selectProjects db",
     "dev": "nodemon",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "start": "node dist"

@@ -10,23 +10,48 @@ export class CreateProjectController implements IController {
   ) {}
 
   handle: IController['handle'] = async (req, res) => {
-    // Verifica se é um admin
-    const admin = this.adminMiddleware.execute(req.headers.authorization as any)
+    try {
+      // Verifica se é um admin
+      const admin = this.adminMiddleware.execute(
+        req.headers.authorization as any,
+      )
 
-    if (isLeft(admin)) return res.status(401).send({ message: admin.value })
+      if (isLeft(admin)) return res.status(401).send({ message: admin.value })
 
-    // Chama o usecase
-    const { name, description, repositoryUrl, link } = req.body
+      // Chama o usecase
+      const {
+        name,
+        description,
+        repositoryUrl,
+        link,
+        slug,
+        usedTechnologies,
+        features,
+        keywords,
+        bannerUrl,
+        previewImageUrl,
+      } = req.body
 
-    const project = await this.createProjectUC.execute({
-      name,
-      description,
-      repositoryUrl,
-      link,
-    })
+      const project = await this.createProjectUC.execute({
+        name,
+        description,
+        repositoryUrl,
+        link,
+        slug,
+        usedTechnologies,
+        features,
+        keywords,
+        bannerUrl,
+        previewImageUrl,
+      })
 
-    if (isLeft(project)) return res.status(400).send({ message: project.value })
+      if (isLeft(project))
+        return res.status(400).send({ message: project.value })
 
-    res.status(201).send({ project })
+      res.status(201).send({ project })
+    } catch (error) {
+      console.error(error)
+      res.status(500).send({ message: 'Houve um erro nosso aqui. Desculpa!' })
+    }
   }
 }

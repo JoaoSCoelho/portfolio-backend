@@ -10,6 +10,7 @@ export class BaseSchema extends Schema {
           unique: true,
           immutable: true,
         },
+        normalized: String,
         ...definition,
       },
       {

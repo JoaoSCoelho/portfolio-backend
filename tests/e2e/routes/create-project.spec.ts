@@ -1,9 +1,17 @@
-import { randCompanyName, randParagraph, randUrl } from '@ngneat/falso'
+import {
+  randCompanyName,
+  randParagraph,
+  randPhrase,
+  randSlug,
+  randUrl,
+  randWord,
+} from '@ngneat/falso'
 import { randomUUID } from 'crypto'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 
 import { app } from '../../../src/main/express/app'
+import { slugify } from '../../../src/shared/slugify'
 import toJson from '../../../src/shared/toJson'
 
 describe('(POST) /api/projects', () => {
@@ -27,6 +35,10 @@ describe('(POST) /api/projects', () => {
       expect(body).toEqual({
         project: {
           ...projectData,
+          usedTechnologies: [],
+          features: [],
+          keywords: [],
+          slug: slugify(projectData.name),
           id: expect.any(String),
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
@@ -37,17 +49,37 @@ describe('(POST) /api/projects', () => {
     })
 
     test('Deve criar um novo project (todas as props)', async () => {
-      const projectData = {
+      const data = {
         name: randCompanyName(),
         description: randParagraph(),
         repositoryUrl: randUrl(),
         link: randUrl(),
+        usedTechnologies: [randCompanyName()],
+        features: [randPhrase()],
+        keywords: [randWord()],
+        slug: randSlug(),
+        bannerUrl: randUrl(),
+        previewImageUrl: randUrl(),
       }
+
+      await Promise.all(
+        data.usedTechnologies.map(
+          async (technology) =>
+            await mongoose.model('Technology').create({
+              aliases: [],
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              id: randomUUID(),
+              keywords: [],
+              name: technology,
+            }),
+        ),
+      )
 
       const { body } = await supertest(app)
         .post('/api/projects')
         .set({ Authorization: process.env.ADMIN_AUTHORIZATION })
-        .send(projectData)
+        .send(data)
         .expect(201)
 
       const dbProjects = await mongoose
@@ -56,7 +88,7 @@ describe('(POST) /api/projects', () => {
 
       expect(body).toEqual({
         project: {
-          ...projectData,
+          ...data,
           id: expect.any(String),
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
@@ -91,56 +123,59 @@ describe('(POST) /api/projects', () => {
       })
       expect(dbProjects.length).toBe(0)
     })
-  })
 
-  test('Não passar uma prop', async () => {
-    const projectData = {
-      // O UUID é pra garantir unique e conseguir buscar no banco
-      description: randParagraph() + randomUUID(),
-      repositoryUrl: randUrl(),
-      link: randUrl(),
-    }
+    test('Não passar uma prop', async () => {
+      const projectData = {
+        // O UUID é pra garantir unique e conseguir buscar no banco
+        description: randParagraph() + randomUUID(),
+        repositoryUrl: randUrl(),
+        link: randUrl(),
+      }
 
-    const { body } = await supertest(app)
-      .post('/api/projects')
-      .set({ Authorization: process.env.ADMIN_AUTHORIZATION })
-      .send(projectData)
-      .expect(400)
+      const { body } = await supertest(app)
+        .post('/api/projects')
+        .set({ Authorization: process.env.ADMIN_AUTHORIZATION })
+        .send(projectData)
+        .expect(400)
 
-    const dbProjects = await mongoose
-      .model('Project')
-      .find({ description: projectData.description })
+      const dbProjects = await mongoose
+        .model('Project')
+        .find({ description: projectData.description })
 
-    expect(body).toEqual({
-      message:
-        'Deu merda aqui instanciando o project: >> name: >> O tipo disso aí não tem nada a ver',
+      expect(body).toEqual({
+        message:
+          'Deu merda aqui instanciando o project: >> name: >> O tipo disso aí não tem nada a ver',
+      })
+      expect(dbProjects.length).toBe(0)
     })
-    expect(dbProjects.length).toBe(0)
-  })
 
-  test('enviando link inválido', async () => {
-    const projectData = {
-      // O UUID é pra garantir unique e conseguir buscar no banco
-      name: randCompanyName() + randomUUID(),
-      description: randParagraph(),
-      repositoryUrl: randUrl(),
-      link: 'something-no-url',
-    }
+    test('enviando link inválido', async () => {
+      const projectData = {
+        // O UUID é pra garantir unique e conseguir buscar no banco
+        name: randCompanyName() + randomUUID(),
+        description: randParagraph(),
+        repositoryUrl: randUrl(),
+        link: 'something-no-url',
+      }
 
-    const { body } = await supertest(app)
-      .post('/api/projects')
-      .set({ Authorization: process.env.ADMIN_AUTHORIZATION })
-      .send(projectData)
-      .expect(400)
+      const { body } = await supertest(app)
+        .post('/api/projects')
+        .set({ Authorization: process.env.ADMIN_AUTHORIZATION })
+        .send(projectData)
+        .expect(400)
 
-    const dbProjects = await mongoose
-      .model('Project')
-      .find({ name: projectData.name })
+      const dbProjects = await mongoose
+        .model('Project')
+        .find({ name: projectData.name })
 
-    expect(body).toEqual({
-      message:
-        'Deu merda aqui instanciando o project: >> link: >> Isso não é uma url nem aqui nem na *****',
+      expect(body).toEqual({
+        message:
+          'Deu merda aqui instanciando o project: >> link: >> Isso não é uma url nem aqui nem na *****',
+      })
+      expect(dbProjects.length).toBe(0)
     })
-    expect(dbProjects.length).toBe(0)
+
+    // Testar enviando technology que n tem no banco
+    // testar todos os erros possíveis
   })
 })

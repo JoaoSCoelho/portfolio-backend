@@ -13,6 +13,7 @@ Tabela de conteúdos
     - [Features](#features)
   - [Licença](#licença)
   - [Tecnologias utilizadas](#tecnologias-utilizadas)
+  - [Para devs](#para-devs)
 
 ## Instalação
 
@@ -54,7 +55,10 @@ $ npm run test:unit
 # Para executar os testes funcionais
 $ npm run test:e2e
 
-# Para rodar todos os testes
+# Para executar os testes do banco de dados
+$ npm run test:db
+
+# Para rodar todos os testes (exceto banco de dados)
 $ npm run test:all
 ```
 
@@ -62,10 +66,10 @@ Agora você já pode acessar: `http://localhost:{ENV.PORT}`
 
 Você pode usar algum programa para testar as requisições, como por exemplo o [Insômnia](https://insomnia.rest/download).
 
-[Insômnia collection](resources/Insomnia_2023-08-03.json) - Coleção de requisições da API no Insômnia
+[Insômnia collection](resources/Insomnia_2023-08-04.json) - Coleção de requisições da API no Insômnia
 
 ## Status
-> **🚧 Em construção... 🚧 v0.0.2**
+> **🚧 Em construção... 🚧**
 
 ### Features
 
@@ -75,7 +79,9 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
   - [ ] Help
   - [x] Create project
   - [x] Get projects
-  - [x] Criar snippets
+  - [x] Create technology
+  - [x] Get technologies
+- [x] Criar snippets
 
 ## Licença
 
@@ -95,3 +101,9 @@ Muitos conceitos de **Clean Architecture** e **S.O.L.I.D** foram aplicados nessa
 </div>
 
 Node.JS | TypeScript | Express | MongoDB | Jest |
+
+## Para devs
+
+* Sempre fique atento ao número da versão no package.json
+* Lembre-se de atualizar a função `normalizeDatabase()` sempre que atualizar alguma entidade
+* Sempre que adicionar novas rotas, lembre-se de atualizar o arquivo **Insômnia collection**

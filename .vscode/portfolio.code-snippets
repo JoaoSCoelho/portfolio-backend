@@ -198,7 +198,7 @@
     "isFileTemplate": true,
     "body": [
       "export function make$1Controller() {",
-      "  const $2UC = new $1UC(projectsRepository)",
+      "  const $2UC = new $1UC()",
       "  return new $1Controller($2UC)",
       "}"
     ],

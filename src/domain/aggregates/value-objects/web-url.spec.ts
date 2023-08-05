@@ -12,7 +12,7 @@ test('Deve instanciar um novo WebUrl', () => {
 })
 
 describe('Deve retornar erros de incommpatibilidade', () => {
-  test('Erro por O tipo disso aí não tem nada a ver', () => {
+  test('Erro por tipo inválido', () => {
     const url = 654365324
 
     const webUrl = WebUrl.create(url as any)
