@@ -13,6 +13,7 @@ Tabela de conteúdos
     - [Features](#features)
   - [Licença](#licença)
   - [Tecnologias utilizadas](#tecnologias-utilizadas)
+  - [Para devs](#para-devs)
 
 ## Instalação
 
@@ -68,7 +69,7 @@ Você pode usar algum programa para testar as requisições, como por exemplo o 
 [Insômnia collection](resources/Insomnia_2023-08-04.json) - Coleção de requisições da API no Insômnia
 
 ## Status
-> **🚧 Em construção... 🚧 v0.0.3**
+> **🚧 Em construção... 🚧**
 
 ### Features
 
@@ -100,3 +101,9 @@ Muitos conceitos de **Clean Architecture** e **S.O.L.I.D** foram aplicados nessa
 </div>
 
 Node.JS | TypeScript | Express | MongoDB | Jest |
+
+## Para devs
+
+* Sempre fique atento ao número da versão no package.json
+* Lembre-se de atualizar a função `normalizeDatabase()` sempre que atualizar alguma entidade
+* Sempre que adicionar novas rotas, lembre-se de atualizar o arquivo **Insômnia collection**

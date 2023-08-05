@@ -1,9 +1,7 @@
-import { randomUUID } from 'crypto'
 import { Model } from 'mongoose'
 
 import { Project } from '../../../../domain/entities/project'
 import { everyIsRight } from '../../../../shared/either'
-import { slugify } from '../../../../shared/slugify'
 import { IProjectsRepository } from '../../ports/projects-repository.port'
 
 export class MongoProjectsRepository implements IProjectsRepository {
@@ -11,39 +9,6 @@ export class MongoProjectsRepository implements IProjectsRepository {
 
   all: IProjectsRepository['all'] = async () => {
     const dbProjects = await this.model.find()
-
-    {
-      // Remover esse bloco quando todos os dados do banco estiverem no novo formato do project
-      const oldFormatDbProjects = dbProjects.filter(
-        (dbP) =>
-          dbP.usedTechnologies === undefined ||
-          dbP.features === undefined ||
-          dbP.keywords === undefined ||
-          dbP.slug === undefined,
-      )
-
-      if (oldFormatDbProjects.length) {
-        await this.model.updateMany(
-          { usedTechnologies: undefined },
-          { usedTechnologies: [] },
-        )
-        await this.model.updateMany({ features: undefined }, { features: [] })
-        await this.model.updateMany({ keywords: undefined }, { keywords: [] })
-        await Promise.all(
-          oldFormatDbProjects
-            .filter((dbP) => dbP.slug === undefined)
-            .map(
-              async (dbP) =>
-                await this.model.updateMany(
-                  { id: dbP.id },
-                  { slug: slugify(randomUUID()) },
-                ),
-            ),
-        )
-
-        return this.all()
-      }
-    }
 
     const projects = dbProjects.map(
       ({
