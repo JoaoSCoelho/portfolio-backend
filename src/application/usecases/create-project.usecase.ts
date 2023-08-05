@@ -20,15 +20,21 @@ export class CreateProjectUC implements ICreateProjectUC {
 
     // Confere se tem outro project com o mesmo slug
 
-    if (
-      await this.projectsRepository.existsWithThisSlug(String(project.slug))
-    ) {
-      project = Project.create({
-        ...data,
-        slug: slugify(data.name + '-' + project.id),
-      })
+    const existsWithThisSlug = await this.projectsRepository.existsWithThisSlug(
+      String(project.slug),
+    )
 
-      if (isLeft(project)) throw new Error()
+    if (existsWithThisSlug) {
+      if (data.slug === undefined) {
+        project = Project.create({
+          ...data,
+          slug: slugify(data.name + '-' + project.id),
+        })
+
+        if (isLeft(project)) throw new Error()
+      } else {
+        return left('Já existe um project com esse slug')
+      }
     }
 
     // Confere se as tecnologias existem
