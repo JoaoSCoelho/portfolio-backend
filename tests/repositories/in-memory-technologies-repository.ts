@@ -20,4 +20,10 @@ export class InMemoryTechnologiesRepository implements ITechnologiesRepository {
   all: ITechnologiesRepository['all'] = async () => {
     return this.db
   }
+
+  existsWithThisName: ITechnologiesRepository['existsWithThisName'] = async (
+    name,
+  ) => {
+    return !!this.db.find((tech) => tech.name === name)
+  }
 }
