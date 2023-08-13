@@ -16,6 +16,13 @@ export class CreateTechnologyUC implements ICreateTechnologyUC {
         'Deu merda aqui instanciando o technology: >> ' + technology.value,
       )
 
+    // Verificar se já existe com o mesmo name
+    const existsWithThisName =
+      await this.technologiesRepository.existsWithThisName(technology.name)
+
+    if (existsWithThisName)
+      return left('Já existe uma tecnologia com este nome')
+
     // Cria no banco
     await this.technologiesRepository.create(technology)
 

@@ -42,4 +42,14 @@ export class MongoTechnologiesRepository implements ITechnologiesRepository {
 
     return technologies
   }
+
+  existsWithThisName: ITechnologiesRepository['existsWithThisName'] = async (
+    name,
+  ) => {
+    const exists = await this.model.exists({ name })
+
+    if (exists === null) return false
+
+    return true
+  }
 }
